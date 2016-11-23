@@ -1,0 +1,28 @@
+{
+  "name": "gulp-mem",
+  "version": "0.0.1",
+  "description": "Gulp in-memory destination with filesystem api and server middleware.",
+  "author": "Turtlemay <turtlemay@me.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turtlemay/gulp-mem.git"
+  },
+  "keywords": [
+    "es6",
+    "es2015",
+    "gulp",
+    "plugin",
+    "development",
+    "memory",
+    "server",
+    "middleware"
+  ],
+  "main": "main.js",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp-util": "^3.0.7",
+    "memory-fs": "^0.3.0",
+    "mime-types": "^2.1.13",
+    "through2": "^2.0.1"
+  }
+}
