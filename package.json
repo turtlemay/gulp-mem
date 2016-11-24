@@ -18,7 +18,7 @@
     "middleware"
   ],
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "gulp-util": "^3.0.7",
     "memory-fs": "^0.3.0",
     "mime-types": "^2.1.13",
