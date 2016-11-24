@@ -17,7 +17,6 @@
     "server",
     "middleware"
   ],
-  "main": "main.js",
   "license": "MIT",
   "devDependencies": {
     "gulp-util": "^3.0.7",
