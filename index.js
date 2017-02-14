@@ -17,7 +17,7 @@ module.exports = class {
   middleware(request, response, next) {
     let readFilePath = url.parse(request.url).pathname;
     if (readFilePath === '/') readFilePath = '/index.html';
-    readFilePath = path.posix.join(this.serveBasePath, readFilePath);
+    readFilePath = path.posix.join('/', this.serveBasePath, readFilePath);
     this.fs.readFile(readFilePath, (error, data) => {
       if (error) {
         if (this.enableLog) gulpUtil.log(`File "${readFilePath}" not found in memory.`);
