@@ -37,13 +37,11 @@ module.exports = class {
       if (file.isStream()) {
         throw new gulpUtil.PluginError(__filename, 'Streams not supported. Must convert to buffer first.');
       }
-      const writeFilePath = (
-        path.posix.join('/', destPath, file.relative).replace(/\\/g, '/')
-      );
-      if (file.isDirectory()) {
-        this._log(`Creating directory "${writeFilePath}" in memory.`);
-        this.fs.mkdirpSync(writeFilePath);
-      } else {
+      if (!file.isDirectory()) {
+        const writeFilePath = path.posix.join('/', destPath, file.relative).replace(/\\/g, '/');
+        const createDirPath = path.dirname(writeFilePath)
+        this._log(`Creating directory "${createDirPath}" in memory.`);
+        this.fs.mkdirpSync(createDirPath);
         this._log(`Writing file "${writeFilePath}" to memory.`);
         this.fs.writeFileSync(writeFilePath, file.contents, {encoding: 'binary'});
       }
