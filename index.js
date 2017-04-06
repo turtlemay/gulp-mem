@@ -15,9 +15,7 @@ module.exports = class {
   }
 
   middleware(request, response, next) {
-    let readFilePath = url.parse(request.url).pathname;
-    if (readFilePath === '/') readFilePath = '/index.html';
-    readFilePath = path.posix.join('/', this.serveBasePath, readFilePath);
+    const readFilePath = this._getFilePathFromUrl(request.url);
     this.fs.readFile(readFilePath, (error, data) => {
       if (error) {
         this._log(`File "${readFilePath}" not found in memory.`);
@@ -51,6 +49,13 @@ module.exports = class {
       callback(null, file);
     });
   };
+
+  _getFilePathFromUrl(fileUrl) {
+    let s = url.parse(fileUrl).pathname;
+    if (s === '/') s = '/index.html';
+    s = path.posix.join('/', this.serveBasePath, s);
+    return s
+  }
 
   _log(message) {
     if (!this.enableLog) return;
