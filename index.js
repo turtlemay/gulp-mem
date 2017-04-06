@@ -53,7 +53,7 @@ module.exports = class {
     let s = url.parse(fileUrl).pathname;
     if (s === '/') s = '/index.html';
     s = path.posix.join('/', this.serveBasePath, s);
-    return s
+    return s;
   }
 
   _log(message) {
