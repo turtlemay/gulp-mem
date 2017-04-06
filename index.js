@@ -20,11 +20,11 @@ module.exports = class {
     readFilePath = path.posix.join('/', this.serveBasePath, readFilePath);
     this.fs.readFile(readFilePath, (error, data) => {
       if (error) {
-        if (this.enableLog) gulpUtil.log(`File "${readFilePath}" not found in memory.`);
+        this._log(`File "${readFilePath}" not found in memory.`);
         if (next) next();
         else response.end();
       } else {
-        if (this.enableLog) gulpUtil.log(`Serving file "${readFilePath}" from memory.`);
+        this._log(`Serving file "${readFilePath}" from memory.`);
         const mimeType = mimeTypes.lookup(readFilePath) || 'application/octet-stream';
         response.writeHead(200, {'Content-Type': mimeType});
         response.end(data);
@@ -39,10 +39,10 @@ module.exports = class {
       const writeFilePath = path.posix.join('/', destPath, file.relative);
       if (file.isBuffer()) {
         if (file.isDirectory()) {
-          if (this.enableLog) gulpUtil.log(`Creating directory "${writeFilePath}" in memory.`);
+          this._log(`Creating directory "${writeFilePath}" in memory.`);
           this.fs.mkdirpSync(writeFilePath);
         } else {
-          if (this.enableLog) gulpUtil.log(`Writing file "${writeFilePath}" to memory.`);
+          this._log(`Writing file "${writeFilePath}" to memory.`);
           this.fs.writeFileSync(writeFilePath, file.contents, {encoding: 'binary'});
         }
       } else if (file.isStream()) {
@@ -51,6 +51,11 @@ module.exports = class {
       callback(null, file);
     });
   };
+
+  _log(message) {
+    if (!this.enableLog) return;
+    gulpUtil.log(message);
+  }
 
   static create() { return new this(); }
 };
