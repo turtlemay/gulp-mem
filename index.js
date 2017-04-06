@@ -34,17 +34,18 @@ module.exports = class {
     if (!destPath) throw new gulpUtil.PluginError(__filename, 'Must provide destination directory.');
     this.fs.mkdirpSync(path.posix.join('/', destPath));
     return through2.obj((file, encoding, callback) => {
-      const writeFilePath = path.posix.join('/', destPath, file.relative);
-      if (file.isBuffer()) {
-        if (file.isDirectory()) {
-          this._log(`Creating directory "${writeFilePath}" in memory.`);
-          this.fs.mkdirpSync(writeFilePath);
-        } else {
-          this._log(`Writing file "${writeFilePath}" to memory.`);
-          this.fs.writeFileSync(writeFilePath, file.contents, {encoding: 'binary'});
-        }
-      } else if (file.isStream()) {
+      if (file.isStream()) {
         throw new gulpUtil.PluginError(__filename, 'Streams not supported. Must convert to buffer first.');
+      }
+      const writeFilePath = (
+        path.posix.join('/', destPath, file.relative).replace(/\\/g, '/')
+      );
+      if (file.isDirectory()) {
+        this._log(`Creating directory "${writeFilePath}" in memory.`);
+        this.fs.mkdirpSync(writeFilePath);
+      } else {
+        this._log(`Writing file "${writeFilePath}" to memory.`);
+        this.fs.writeFileSync(writeFilePath, file.contents, {encoding: 'binary'});
       }
       callback(null, file);
     });
