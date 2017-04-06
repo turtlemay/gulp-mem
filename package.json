@@ -11,6 +11,7 @@
     "es6",
     "es2015",
     "gulp",
+    "gulpplugin",
     "plugin",
     "development",
     "memory",
