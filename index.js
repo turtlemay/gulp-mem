@@ -39,7 +39,7 @@ module.exports = class {
       }
       if (!file.isDirectory()) {
         const writeFilePath = path.posix.join('/', destPath, file.relative).replace(/\\/g, '/');
-        const createDirPath = path.dirname(writeFilePath);
+        const createDirPath = path.posix.dirname(writeFilePath);
         this._log(`Creating directory "${createDirPath}" in memory.`);
         this.fs.mkdirpSync(createDirPath);
         this._log(`Writing file "${writeFilePath}" to memory.`);
