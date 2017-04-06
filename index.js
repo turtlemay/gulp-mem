@@ -60,6 +60,4 @@ module.exports = class {
     if (!this.enableLog) return;
     gulpUtil.log(message);
   }
-
-  static create() { return new this(); }
 };
