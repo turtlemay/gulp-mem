@@ -32,9 +32,6 @@ module.exports = class {
 
   dest(destPath) {
     return through2.obj((file, encoding, callback) => {
-      if (!destPath) {
-        throw new gulpUtil.PluginError(__filename, 'Must provide destination directory.')
-      }
       if (destPath instanceof Function) {
         destPath = destPath(file)
       }
