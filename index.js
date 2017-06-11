@@ -35,7 +35,7 @@ module.exports = class {
       if (!destPath) {
         throw new gulpUtil.PluginError(__filename, 'Must provide destination directory.')
       }
-      if (typeof destPath === 'function') {
+      if (destPath instanceof Function) {
         destPath = destPath(file)
       }
       if (file.isStream()) {
