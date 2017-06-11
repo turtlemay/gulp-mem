@@ -32,20 +32,19 @@ module.exports = class {
 
   dest(destPath) {
     return through2.obj((file, encoding, callback) => {
-      if (destPath instanceof Function) {
-        destPath = destPath(file)
-      }
       if (file.isStream()) {
         throw new gulpUtil.PluginError(__filename, 'Streams not supported. Must convert to buffer first.')
       }
-      if (!file.isDirectory()) {
-        const writeFilePath = path.posix.join('/', destPath, file.relative).replace(/\\/g, '/')
-        const createDirPath = path.posix.dirname(writeFilePath)
-        this._log(`Creating directory "${createDirPath}" in memory.`)
-        this.fs.mkdirpSync(createDirPath)
-        this._log(`Writing file "${writeFilePath}" to memory.`)
-        this.fs.writeFileSync(writeFilePath, file.contents, { encoding: 'binary' })
+      if (file.isDirectory()) {
+        return void callback(null, file)
       }
+      if (destPath instanceof Function) destPath = destPath(file)
+      const writeFilePath = path.posix.join('/', destPath, file.relative).replace(/\\/g, '/')
+      const createDirPath = path.posix.dirname(writeFilePath)
+      this._log(`Creating directory "${createDirPath}" in memory.`)
+      this.fs.mkdirpSync(createDirPath)
+      this._log(`Writing file "${writeFilePath}" to memory.`)
+      this.fs.writeFileSync(writeFilePath, file.contents, { encoding: 'binary' })
       callback(null, file)
     })
   }
