@@ -38,8 +38,13 @@ module.exports = class {
       if (file.isDirectory()) {
         return void callback(null, file)
       }
-      if (destPath instanceof Function) destPath = destPath(file)
-      const writeFilePath = path.posix.join('/', destPath, file.relative).replace(/\\/g, '/')
+      let realDestPath
+      if (destPath instanceof Function) {
+        realDestPath = destPath(file)
+      } else {
+        realDestPath = destPath    
+      }
+      const writeFilePath = path.posix.join('/', realDestPath, file.relative).replace(/\\/g, '/')
       const createDirPath = path.posix.dirname(writeFilePath)
       this._log(`Creating directory "${createDirPath}" in memory.`)
       this.fs.mkdirpSync(createDirPath)
