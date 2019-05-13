@@ -2,7 +2,7 @@
   "name": "gulp-mem",
   "version": "0.1.1",
   "description": "Gulp in-memory destination with filesystem api and server middleware.",
-  "author": "Turtlemay <turtlemay@me.com>",
+  "author": "Turtlemay <am@trtl.in>",
   "repository": {
     "type": "git",
     "url": "https://github.com/turtlemay/gulp-mem.git"
