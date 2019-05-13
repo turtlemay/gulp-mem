@@ -1,4 +1,5 @@
-const gulpUtil = require('gulp-util')
+const PluginError = require('plugin-error');
+const log = require('fancy-log');
 const MemoryFS = require('memory-fs')
 const mimeTypes = require('mime-types')
 const path = require('path')
@@ -33,7 +34,7 @@ module.exports = class {
   dest(destPath) {
     return through2.obj((file, encoding, callback) => {
       if (file.isStream()) {
-        throw new gulpUtil.PluginError(__filename, 'Streams not supported. Must convert to buffer first.')
+        throw new PluginError(__filename, 'Streams not supported. Must convert to buffer first.')
       }
       if (file.isDirectory()) {
         return void callback(null, file)
@@ -42,7 +43,7 @@ module.exports = class {
       if (destPath instanceof Function) {
         realDestPath = destPath(file)
       } else {
-        realDestPath = destPath    
+        realDestPath = destPath
       }
       const writeFilePath = path.posix.join('/', realDestPath, file.relative).replace(/\\/g, '/')
       const createDirPath = path.posix.dirname(writeFilePath)
@@ -62,6 +63,6 @@ module.exports = class {
   }
 
   _log(message) {
-    if (this.enableLog) gulpUtil.log(message)
+    if (this.enableLog) log(message)
   }
 }
