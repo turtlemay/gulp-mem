@@ -1,5 +1,4 @@
 const PluginError = require('plugin-error')
-const log = require('fancy-log')
 const MemoryFS = require('memory-fs')
 const mimeTypes = require('mime-types')
 const path = require('path')
@@ -11,6 +10,8 @@ module.exports = class {
     this.middleware = this.middleware.bind(this)
     this.dest = this.dest.bind(this)
     this.enableLog = true
+    this.logFn = null
+    this.errorFn = null
     this.serveBasePath = '/'
     this.fs = new MemoryFS()
   }
@@ -19,7 +20,7 @@ module.exports = class {
     const readFilePath = this._getFilePathFromUrl(request.url)
     this.fs.readFile(readFilePath, (error, data) => {
       if (error) {
-        this._log(`File "${readFilePath}" not found in memory.`)
+        this._error(`File "${readFilePath}" not found in memory.`)
         if (next) next()
         else response.end()
       } else {
@@ -63,6 +64,14 @@ module.exports = class {
   }
 
   _log(message) {
-    if (this.enableLog) log(message)
+    if (this.enableLog && this.logFn instanceof Function) {
+      this.logFn(message)
+    }
+  }
+
+  _error(message) {
+    if (this.enableLog && this.errorFn instanceof Function) {
+      this.errorFn(message)
+    }
   }
 }

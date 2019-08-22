@@ -65,6 +65,7 @@ You can also use the [filesystem api](https://nodejs.org/api/fs.html) on `gulpMe
 # Optional Configuration
 
 ```javascript
-// Log messages to console. (default `true`)
-gulpMem.enableLog = true
+// Specify logging functions.
+gulpMem.logFn = console.log
+gulpMem.errorFn = console.error
 ```

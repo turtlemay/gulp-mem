@@ -20,7 +20,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "fancy-log": "^1.3.3",
     "memory-fs": "^0.4.1",
     "mime-types": "^2.1.24",
     "plugin-error": "^1.0.1",
