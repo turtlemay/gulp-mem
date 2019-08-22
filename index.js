@@ -1,5 +1,5 @@
-const PluginError = require('plugin-error');
-const log = require('fancy-log');
+const PluginError = require('plugin-error')
+const log = require('fancy-log')
 const MemoryFS = require('memory-fs')
 const mimeTypes = require('mime-types')
 const path = require('path')
