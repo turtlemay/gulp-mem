@@ -1,6 +1,6 @@
 {
   "name": "gulp-mem",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Gulp in-memory destination with filesystem api and server middleware.",
   "author": "Turtlemay <am@trtl.in>",
   "repository": {
