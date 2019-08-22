@@ -8,8 +8,12 @@ const url = require('url')
 
 module.exports = class {
   enableLog = true
+  
+  /** @type {(msg: any) => void} */
   logFn = log
+  /** @type {(msg: any) => void} */
   errorFn = log.error
+  
   serveBasePath = '/'
   fs = new MemoryFS()
 
@@ -18,6 +22,11 @@ module.exports = class {
     this.dest = this.dest.bind(this)
   }
 
+  /**
+   * @param {Object} request
+   * @param {Object} response
+   * @param {Function} next
+   */
   middleware(request, response, next) {
     const readFilePath = this._getFilePathFromUrl(request.url)
     this.fs.readFile(readFilePath, (error, data) => {
@@ -34,6 +43,7 @@ module.exports = class {
     })
   }
 
+  /** @param {String} destPath */
   dest(destPath) {
     return through2.obj((file, encoding, callback) => {
       if (file.isStream()) {
@@ -58,6 +68,7 @@ module.exports = class {
     })
   }
 
+  /** @param {String} fileUrl */
   _getFilePathFromUrl(fileUrl) {
     let s = url.parse(fileUrl).pathname
     if (s === '/') s = '/index.html'
@@ -65,12 +76,14 @@ module.exports = class {
     return s
   }
 
+  /** @param {String} message */
   _log(message) {
     if (this.enableLog && this.logFn instanceof Function) {
       this.logFn(message)
     }
   }
 
+  /** @param {String} message */
   _error(message) {
     if (this.enableLog && this.errorFn instanceof Function) {
       this.errorFn(message)
