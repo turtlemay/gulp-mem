@@ -7,14 +7,15 @@ const through2 = require('through2')
 const url = require('url')
 
 module.exports = class {
+  enableLog = true
+  logFn = log
+  errorFn = log.error
+  serveBasePath = '/'
+  fs = new MemoryFS()
+
   constructor() {
     this.middleware = this.middleware.bind(this)
     this.dest = this.dest.bind(this)
-    this.enableLog = true
-    this.logFn = log
-    this.errorFn = log.error
-    this.serveBasePath = '/'
-    this.fs = new MemoryFS()
   }
 
   middleware(request, response, next) {
