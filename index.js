@@ -1,5 +1,6 @@
 const PluginError = require('plugin-error')
 const MemoryFS = require('memory-fs')
+const log = require('fancy-log')
 const mimeTypes = require('mime-types')
 const path = require('path')
 const through2 = require('through2')
@@ -10,8 +11,8 @@ module.exports = class {
     this.middleware = this.middleware.bind(this)
     this.dest = this.dest.bind(this)
     this.enableLog = true
-    this.logFn = null
-    this.errorFn = null
+    this.logFn = log
+    this.errorFn = log.error
     this.serveBasePath = '/'
     this.fs = new MemoryFS()
   }
