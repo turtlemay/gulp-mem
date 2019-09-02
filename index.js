@@ -9,10 +9,15 @@ const url = require('url')
 module.exports = class {
   constructor() {
     this.enableLog = true
+
+    /** @type {(msg: any) => void} */
     this.logFn = log
+    /** @type {(msg: any) => void} */
     this.errorFn = log.error
+
     this.serveBasePath = '/'
     this.fs = new MemoryFS()
+
     this.middleware = this.middleware.bind(this)
     this.dest = this.dest.bind(this)
   }
