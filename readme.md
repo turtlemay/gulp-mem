@@ -3,7 +3,8 @@ Hard drive i/o is slow and writing to your ssd reduces its lifespan. This gulp p
 # Installation
 
 ```bash
-npm install -D gulp-mem
+# npm install -D gulp-mem
+yarn add -D gulp-mem
 ```
 
 # Usage
